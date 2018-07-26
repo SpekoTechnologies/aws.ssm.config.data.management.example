@@ -1,0 +1,15 @@
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Include vars from vault
+    include_vars: "./vault.yml"
+
+  - name: Push params for uk.preprod.example_service
+    param_pusher:
+      group: "uk.preprod.example_service"
+      version: "v0.1"
+      region: "eu-west-1"
+      single_key: true
+      parameters:
+        SOME_KEY: "some_value"
+        SOME_PRIVATE_KEY: "{{VAULT_SOME_PRIVATE_KEY}}"
